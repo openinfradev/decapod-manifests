@@ -31,7 +31,7 @@ spec:
       annotations:
         "openstackhelm.openstack.org/release_uuid": ""
         configmap-bin-hash: "645b0d7e28e8bdfbf61d768043382ec1b8d1ef241e239fdb7f2d4989a84e1727"
-        configmap-etc-hash: "a84475c74f808985fd2f2b2385f8dd31f0a0c0799261487d9ee61219e288d220"
+        configmap-etc-hash: "6b95a0bb269cfb98d71d32bc01d63134a53dd8e50eace2466d1623dc0ff90131"
     spec:
       serviceAccountName: nova-conductor
       securityContext:

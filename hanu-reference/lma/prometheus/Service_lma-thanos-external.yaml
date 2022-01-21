@@ -1,11 +1,10 @@
-# Source: kube-prometheus-stack/templates/prometheus/serviceThanosSidecar.yaml
+# Source: kube-prometheus-stack/templates/prometheus/serviceThanosSidecarExternal.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: lma-thanos-discovery
+  name: lma-thanos-external
   namespace: lma
   labels:
-    app: kube-prometheus-stack-thanos-discovery
     
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/instance: prometheus
@@ -16,7 +15,6 @@ metadata:
     heritage: "Helm"
 spec:
   type: NodePort
-  clusterIP: map[]
   ports:
   - name: grpc
     port: 10901
