@@ -107,7 +107,7 @@ data:
     set -ex
     curl -k -u elastic:${ELASTIC_PW} -X POST ${ES_URL}/_security/user/$1 -H 'Content-Type: application/json' -d'
     {
-      "password" : "dGFjb3dvcmQ=",
+      "password" : "tacoword",
       "roles" : [ "superuser" ],
       "full_name" : "LMA user by TACO",
       "email" : "taco@taco.com",
@@ -116,4 +116,3 @@ data:
       }
     }
     '
-
