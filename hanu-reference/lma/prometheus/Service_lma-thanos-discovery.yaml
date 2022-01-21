@@ -7,7 +7,11 @@ metadata:
   labels:
     app: kube-prometheus-stack-thanos-discovery
     
-    chart: kube-prometheus-stack-14.5.0
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/instance: prometheus
+    app.kubernetes.io/version: "21.0.3"
+    app.kubernetes.io/part-of: kube-prometheus-stack
+    chart: kube-prometheus-stack-21.0.3
     release: "prometheus"
     heritage: "Helm"
 spec:
@@ -18,6 +22,10 @@ spec:
     port: 10901
     targetPort: grpc
     nodePort: 30901
+  - name: http
+    port: 10902
+    targetPort: http
+    nodePort: 30902
   selector:
-    app: prometheus
+    app.kubernetes.io/name: prometheus
     prometheus: lma-prometheus

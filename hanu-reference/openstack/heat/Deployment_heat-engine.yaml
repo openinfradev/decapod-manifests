@@ -31,7 +31,7 @@ spec:
       annotations:
         "openstackhelm.openstack.org/release_uuid": ""
         configmap-bin-hash: "b814469ae6753dfd221f5a931a0989174069b9cb80cdf5deaf7edd27c8bc09d9"
-        configmap-etc-hash: "5edee1dc99837bf80a60b1afdbe18d11bd18210c16f30fb53cc8907784ce87f1"
+        configmap-etc-hash: "a0f340daaed7f92377043e731d6c87a8732e7dc94c129cf163dc52a4a5507995"
     spec:
       serviceAccountName: heat-engine
       securityContext:
