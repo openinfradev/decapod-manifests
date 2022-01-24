@@ -23,7 +23,7 @@ spec:
         app.kubernetes.io/name: promtail
         app.kubernetes.io/instance: promtail
       annotations:
-        checksum/config: 0532919481bc19d265e4d963f11f5eaac02c0afaeeace485618a47e1a2cda41a
+        checksum/config: ef332582fe08e3287a4e5904dec20eee53dd6d0fc82374e72e5a7633d985385f
     spec:
       serviceAccountName: promtail
       securityContext:
