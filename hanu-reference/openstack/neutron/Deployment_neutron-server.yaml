@@ -31,7 +31,7 @@ spec:
       annotations:
         "openstackhelm.openstack.org/release_uuid": ""
         configmap-bin-hash: "5c7b05eb47e1f5bad4324b03a4e7646e24311e8c8f9be5116c41b3dbf18d8f3c"
-        configmap-etc-hash: "c7d83e14eda8316dd084530997357779f822a9ccf194e31481a9ed90c7673bd8"
+        configmap-etc-hash: "3e8c9ad7d2a3c7b452d44280aba313d54a34482e1a4ad090af3ad005b38f31eb"
     spec:
       securityContext:
         runAsUser: 42435

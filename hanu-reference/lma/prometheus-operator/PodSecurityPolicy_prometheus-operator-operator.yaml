@@ -1,3 +1,4 @@
+---
 # Source: kube-prometheus-stack/templates/prometheus-operator/psp.yaml
 apiVersion: policy/v1beta1
 kind: PodSecurityPolicy

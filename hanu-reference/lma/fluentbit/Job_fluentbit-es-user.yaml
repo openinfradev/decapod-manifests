@@ -17,7 +17,7 @@ spec:
       labels:
         app: fluentbit-operator
         
-        chart: fluentbit-operator-1.2.0
+        chart: fluentbit-operator-1.2.1
         release: "fluentbit"
         heritage: "Helm"
     spec:
