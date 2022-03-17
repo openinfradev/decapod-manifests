@@ -7,8 +7,11 @@ metadata:
   namespace: istio-system
 spec:
   strategy: production
-  agent:
-    strategy: Sidecar
+  sampling:
+    options:
+      default_strategy:
+        type: probabilistic
+        param: 100
   ingress:
     enabled: false
   collector:
@@ -16,10 +19,10 @@ spec:
     resources:
       requests:
         cpu: 500m
-        memory: 1Gi
+        memory: 1024Mi
       limits:
-        cpu: 1
-        memory: 2Gi
+        cpu: 1000m
+        memory: 2048Mi
   storage:
     type: elasticsearch
     esIndexCleaner:
@@ -29,7 +32,7 @@ spec:
     options:
       es:
         index-prefix: jaeger
-        username: elastic
+        username: taco-jaeger
         password: tacoword
         tls.ca: /etc/ssl/certs/tls.crt
         server-urls: https://eck-elasticsearch-es-http.lma.svc:9200

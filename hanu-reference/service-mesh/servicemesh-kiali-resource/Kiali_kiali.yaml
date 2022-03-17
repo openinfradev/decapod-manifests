@@ -8,24 +8,18 @@ metadata:
   annotations:
     ansible.operator-sdk/verbosity: "1"
 spec:
-  nameOverride: kiali
-  fullnameOverride: kiali
-  istio_component_namespaces:
-    prometheus: lma
   istio_namespace: istio-system
   deployment:
-    accessible_namespaces:
-    - '**'
     ingress_enabled: false
     namespace: istio-system
     replicas: 1
     resources:
       requests:
         cpu: 500m
-        memory: 1024Mi
+        memory: 512Mi
       limits:
         cpu: 1000m
-        memory: 2048Mi
+        memory: 1024Mi
     node_selector:
       servicemesh: enabled
     service_type: ClusterIP
@@ -35,14 +29,28 @@ spec:
     custom_dashboards:
       enabled: true
     istio:
-      config_map_name: istio-1-11-7
+      config_map_name: istio
       istio_identity_domain: svc.cluster.local
+      component_status:
+        enabled: true
+        components:
+        - app_label: istiod
+          is_core: true
+          is_proxy: false
+        - app_label: istio-ingress-gateway
+          is_core: true
+          is_proxy: true
+        - app_label: istio-egress-gateway
+          is_core: false
+          is_proxy: true
     prometheus:
       url: http://lma-prometheus.lma.svc:9090
     tracing:
       enabled: true
       namespace_selector: true
       in_cluster_url: http://jaeger-operator-jaeger-query.istio-system:16686
+      url: https://jaeger-v2.taco-cat.xyz
+      use_grpc: false
     grafana:
       auth:
         password: password
@@ -51,7 +59,7 @@ spec:
         username: admin
       enabled: true
       in_cluster_url: http://grafana.lma.svc:80
-      url: http://VM-NAME-1:30009
+      url: https://grafana-v2.taco-cat.xyz
   server:
     metrics_enabled: true
     metrics_port: 9090
