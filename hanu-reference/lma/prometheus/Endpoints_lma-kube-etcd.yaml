@@ -17,7 +17,7 @@ metadata:
   namespace: kube-system
 subsets:
   - addresses:
-      - ip: 172.27.1.222
+      - ip: TO_BE_FIXED
     ports:
       - name: http-metrics
         port: 2379
