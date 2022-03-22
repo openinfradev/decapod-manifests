@@ -42,7 +42,7 @@ spec:
       - key: node-role.kubernetes.io/node
         operator: Exists
 
-      hostNetwork: true
+      hostNetwork: false
       hostPID: true
       initContainers:
         
