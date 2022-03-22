@@ -1,0 +1,49 @@
+# Source: servicemesh-portal/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: servicemesh-portal
+  namespace: istio-system
+  labels:
+    helm.sh/chart: servicemesh-portal-1.0.0
+    app.kubernetes.io/name: servicemesh-portal
+    app.kubernetes.io/instance: servicemesh-portal
+    app.kubernetes.io/version: "1.0.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: servicemesh-portal
+      app.kubernetes.io/instance: servicemesh-portal
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: servicemesh-portal
+        app.kubernetes.io/instance: servicemesh-portal
+    spec:
+      serviceAccountName: servicemesh-portal
+      securityContext:
+        {}
+      containers:
+        - name: servicemesh-portal
+          securityContext:
+            {}
+          image: "docker.io/sktcloud/tks-portal:1.0.0"
+          imagePullPolicy: Always
+          ports:
+            - name: port
+              containerPort: 8080
+              protocol: TCP
+          resources:
+            {}
+          volumeMounts:
+            - mountPath: /opt/application.yaml
+              name: config
+              subPath: application.yaml
+      volumes:
+        - configMap:
+            defaultMode: 420
+            name: servicemesh-portal
+          name: config
+
