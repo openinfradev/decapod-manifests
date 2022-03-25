@@ -7,6 +7,10 @@ spec:
   version: 7.5.1
   image: "docker.elastic.co/kibana/kibana:7.5.1"
   count: 1
+  config:
+    server:
+      basePath: /kibana
+      rewriteBasePath: true
   elasticsearchRef:
     name: eck-elasticsearch
   http:
@@ -31,5 +35,11 @@ spec:
           limits:
             memory: "8Gi"
             cpu: 4
+      readinessProbe:
+        failureThreshold: 3
+        httpGet:
+          path: /kibana/login
+          port: 5601
+          scheme: HTTP
       nodeSelector:
         taco-lma: enabled

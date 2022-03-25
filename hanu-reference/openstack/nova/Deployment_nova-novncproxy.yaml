@@ -31,7 +31,7 @@ spec:
       annotations:
         "openstackhelm.openstack.org/release_uuid": ""
         configmap-bin-hash: "645b0d7e28e8bdfbf61d768043382ec1b8d1ef241e239fdb7f2d4989a84e1727"
-        configmap-etc-hash: "2829431cb9b7e9601401b9a3ac3f7bd5d209c962847df4ae86b4dc35ca54372f"
+        configmap-etc-hash: "2948a14b2faa8a529537a5c9e81a00811d2f817c8c1a6924ccdd0f885362f199"
     spec:
       serviceAccountName: nova-novncproxy
       securityContext:
