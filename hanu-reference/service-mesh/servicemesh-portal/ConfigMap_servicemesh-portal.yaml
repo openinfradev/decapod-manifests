@@ -1,8 +1,0 @@
-# Source: servicemesh-portal/templates/configmap.yaml
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: servicemesh-portal
-  namespace: istio-system  
-data:
-  application.yaml: "config: null\nharbor:\n  url: https://harbor.example.com\nkeycloak:\n  auth-server-url: CHANGEME\n  confidential-port: 0\n  credentials:\n    secret: CHANGEME\n  policy-enforcer: {}\n  realm: CHANGEME\n  resource: portal\n  ssl-required: external\n  use-resource-role-mappings: false\n  verify-token-audience: true\nlogging:\n  config: classpath:logback-console.xml\nsecurity:\n  oauth2:\n    auth-server-uri: http://localhost:8080\n    client:\n      client-id: registry\n      client-secret: registry-secret\n    resource:\n      token-info-uri: http://localhost:8080/oauth/check_token\nserver:\n  port: 8080\nspring:\n  aop:\n    proxy-target-class: true\n  jmx:\n    enabled: false\n  profiles:\n    active: prod,log\ntks:\n  admin:\n    password: CHANGEME\n    username: CHANGEME\n  url: CHANGEME"
