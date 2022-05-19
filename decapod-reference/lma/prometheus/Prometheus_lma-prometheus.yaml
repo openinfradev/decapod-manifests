@@ -25,7 +25,7 @@ spec:
   image: "quay.io/prometheus/prometheus:v2.31.1"
   version: v2.31.1
   externalLabels:
-    taco_cluster: dev
+    taco_cluster: cluster.local
   externalUrl: http://lma-prometheus.lma:9090
   nodeSelector:
     taco-lma: enabled
