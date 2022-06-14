@@ -41,7 +41,7 @@ spec:
                     app.kubernetes.io/instance: thanos
                     app.kubernetes.io/component: query
                 namespaces:
-                  - lma
+                  - "lma"
                 topologyKey: kubernetes.io/hostname
               weight: 1
         nodeAffinity:
@@ -61,9 +61,6 @@ spec:
             - --grpc-address=0.0.0.0:10901
             - --http-address=0.0.0.0:10902
             - --query.replica-label=replica
-            - --store=dnssrv+_grpc._tcp.lma-thanos-discovery.lma.svc.cluster.local
-            - --store=dnssrv+_grpc._tcp.thanos-storegateway.lma.svc.cluster.local
-            - --store=dnssrv+_grpc._tcp.thanos-ruler.lma.svc.cluster.local
             - --store=prometheus-operated.lma.svc.cluster.local:10901
           ports:
             - name: http

@@ -1,0 +1,71 @@
+# Source: cluster-api-aws/templates/job-post.yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: cluster.local-capi-aws-post
+  namespace: argo
+  annotations:
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-weight": "5"
+spec:
+  template:
+    metadata:
+      name: cluster.local-capi-aws
+    spec:
+      serviceAccountName: cluster.local-capi-aws
+      containers:
+      - name: generate-worker-machines
+        image: "ghcr.io/openinfradev/python_kubectl_argo:v1.1.0"
+        imagePullPolicy: IfNotPresent
+        command:
+        - timeout
+        - 20m
+        - /generate_worker_machines.py
+        - cluster.local
+        - argo
+        volumeMounts:
+        - name: vol
+          subPath: mp.raw.yaml
+          mountPath: /mp.raw.yaml
+        - name: vol
+          subPath: md.raw.yaml
+          mountPath: /md.raw.yaml
+        - name: vol
+          subPath: generate_worker_machines.py
+          mountPath: /generate_worker_machines.py
+      - name: wait-and-initialize
+        image: "ghcr.io/openinfradev/python_kubectl_argo:v1.1.0"
+        imagePullPolicy: IfNotPresent
+        command:
+        - timeout
+        - 20m
+        - /wait_and_k8s_init.sh
+        - cluster.local
+        - taco
+        - argo
+        - "true"
+        - "true"
+
+        volumeMounts:
+        - name: kubeconfig
+          subPath: value
+          mountPath: /kube.config
+        - name: vol
+          subPath: node_label.py
+          mountPath: /node_label.py
+        - name: vol
+          subPath: wait_and_k8s_init.sh
+          mountPath: /wait_and_k8s_init.sh
+        - name: vol
+          subPath: argo-register.sh
+          mountPath: /argo-register.sh
+
+      volumes:
+      - name: kubeconfig
+        secret:
+          secretName: cluster.local-kubeconfig
+      - name: vol
+        configMap:
+          name: cluster.local-capi-aws
+          defaultMode: 0555
+      restartPolicy: OnFailure

@@ -33,20 +33,24 @@ spec:
     spec:
       serviceAccountName: istio-ingress-gateway
       securityContext:
+        # Safe since 1.22: https://github.com/kubernetes/kubernetes/pull/103326
+        sysctls:
+        - name: net.ipv4.ip_unprivileged_port_start
+          value: "0"
       containers:
         - name: istio-proxy
           image: auto
           securityContext:
+            # Safe since 1.22: https://github.com/kubernetes/kubernetes/pull/103326
             capabilities:
               drop:
               - ALL
-              add:
-              - NET_BIND_SERVICE
-            runAsUser: 0
-            runAsGroup: 1337
-            runAsNonRoot: false
-            allowPrivilegeEscalation: true
+            allowPrivilegeEscalation: false
+            privileged: false
             readOnlyRootFilesystem: true
+            runAsUser: 1337
+            runAsGroup: 1337
+            runAsNonRoot: true
           env:
           ports:
           - containerPort: 15090
