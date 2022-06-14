@@ -1,16 +1,16 @@
-# Source: thanos/charts/minio/templates/deployment-standalone.yaml
+# Source: thanos/charts/minio/templates/standalone/deployment.yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: thanos-minio
-  namespace: "lma"
+  namespace: lma
   labels:
     app.kubernetes.io/name: minio
-    helm.sh/chart: minio-6.0.0
+    helm.sh/chart: minio-6.8.3
     app.kubernetes.io/instance: thanos
     app.kubernetes.io/managed-by: Helm
 spec:
-  strategy: 
+  strategy:
     type: Recreate
   selector:
     matchLabels:
@@ -20,14 +20,14 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: minio
-        helm.sh/chart: minio-6.0.0
+        helm.sh/chart: minio-6.8.3
         app.kubernetes.io/instance: thanos
         app.kubernetes.io/managed-by: Helm
       annotations:
-        checksum/credentials-secret: 84ff4b8abe403acabdbde3525a332378399ccf8b69c1940aded3b5f079b41bd1
+        checksum/credentials-secret: dcf75f3c937b69de9680eba7da64cd5b0d586f5dde4f4ebf7c24ec747e191cad
     spec:
-      serviceAccountName: thanos-minio
       
+      serviceAccountName: thanos-minio
       affinity:
         podAffinity:
           
@@ -39,7 +39,7 @@ spec:
                     app.kubernetes.io/name: minio
                     app.kubernetes.io/instance: thanos
                 namespaces:
-                  - lma
+                  - "lma"
                 topologyKey: kubernetes.io/hostname
               weight: 1
         nodeAffinity:
@@ -48,10 +48,11 @@ spec:
         fsGroup: 1001
       containers:
         - name: minio
-          image: docker.io/bitnami/minio:2021.1.8-debian-10-r2
+          image: docker.io/bitnami/minio:2021.6.14-debian-10-r0
           imagePullPolicy: "IfNotPresent"
           securityContext:
             runAsUser: 1001
+            runAsNonRoot: true
           env:
             - name: BITNAMI_DEBUG
               value: "false"
@@ -72,33 +73,34 @@ spec:
             - name: MINIO_BROWSER
               value: "on"
             - name: MINIO_PROMETHEUS_AUTH_TYPE
-              value: public
-          
+              value: "public"
+          envFrom:
           ports:
             - name: minio
               containerPort: 9000
+              protocol: TCP
           livenessProbe:
+            httpGet:
+              path: /minio/health/live
+              port: minio
             initialDelaySeconds: 5
             periodSeconds: 5
             timeoutSeconds: 5
             successThreshold: 1
             failureThreshold: 5
-            httpGet:
-              path: /minio/health/live
-              port: minio
           readinessProbe:
+            tcpSocket:
+              port: minio
             initialDelaySeconds: 5
             periodSeconds: 5
             timeoutSeconds: 1
             successThreshold: 1
             failureThreshold: 5
-            tcpSocket:
-              port: minio
-          resources: 
+          resources:
             limits: {}
             requests: {}
           volumeMounts:
-            - name: "data"
+            - name: data
               mountPath: /data
       volumes:
         - name: data

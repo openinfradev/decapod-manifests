@@ -1,12 +1,12 @@
-# Source: thanos/charts/minio/templates/pvc-standalone.yaml
+# Source: thanos/charts/minio/templates/pvc.yaml
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: thanos-minio
-  namespace: "lma"
+  namespace: lma
   labels:
     app.kubernetes.io/name: minio
-    helm.sh/chart: minio-6.0.0
+    helm.sh/chart: minio-6.8.3
     app.kubernetes.io/instance: thanos
     app.kubernetes.io/managed-by: Helm
 spec:
